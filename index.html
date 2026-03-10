@@ -31,6 +31,7 @@
                 <a href="#criar-fatura" class="nav-item">Criar Fatura</a>
                 <a href="#consultar-fatura" class="nav-item">Consultar Fatura</a>
                 <a href="#trocar-token" class="nav-item">Trocar Token</a>
+                <a href="#payout" class="nav-item">Payout (Saque)</a>
                 
                 <div class="nav-section">Referência</div>
                 <a href="#status-faturas" class="nav-item">Status das Faturas</a>
@@ -673,6 +674,205 @@ Authorization: Bearer &lt;token&gt;</code></pre>
   "last_digits": "1111",
   "expires_at": "2025-12-31"
 }</code></pre>
+                </div>
+            </section>
+
+            <!-- Payout -->
+            <section id="payout" class="section">
+                <h2>Payout (Saque)</h2>
+                <div class="endpoint-badge">
+                    <span class="method post">POST</span>
+                    <span class="path">/api/v2/payout</span>
+                </div>
+
+                <p>Solicita um saque via PIX para a conta cadastrada ou para uma chave PIX informada na requisição.</p>
+
+                <div class="alert alert-info">
+                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no header <code>Authorization</code>.
+                </div>
+
+                <h3>Parâmetros do Body</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Obrigatório</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>integer</td>
+                                <td>Sim</td>
+                                <td>Valor em centavos (mínimo 1000 = R$10,00)</td>
+                            </tr>
+                            <tr>
+                                <td><code>type</code></td>
+                                <td>string</td>
+                                <td>Sim</td>
+                                <td>Sempre <code>"withdrawal"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>description</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Descrição livre</td>
+                            </tr>
+                            <tr>
+                                <td><code>notes</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Observações adicionais</td>
+                            </tr>
+                            <tr>
+                                <td><code>postback_url</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>URL para receber notificações de mudança de status</td>
+                            </tr>
+                            <tr>
+                                <td><code>pix_key</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Chave PIX de destino (se diferente da cadastrada)</td>
+                            </tr>
+                            <tr>
+                                <td><code>pix_key_type</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Tipo da chave PIX: <code>cpf</code>, <code>cnpj</code>, <code>email</code>, <code>phone</code>, <code>random</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Exemplo de Request</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "amount": 5000,
+  "type": "withdrawal",
+  "description": "Saque mensal",
+  "notes": "Observação opcional",
+  "postback_url": "https://seusite.com/webhook/withdraw",
+  "pix_key": "email@exemplo.com",
+  "pix_key_type": "email"
+}</code></pre>
+                </div>
+
+                <h3>Exemplo de Response (200 OK)</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "message": "Saque processado com sucesso",
+  "data": {
+    "id": 123,
+    "status": "processing",
+    "amount": 5000,
+    "type": "withdrawal",
+    "has_baas": true,
+    "postback_url": "https://seusite.com/webhook/withdraw",
+    "pix_key": "email@exemplo.com",
+    "pix_key_type": "email",
+    "can_auto_process": true,
+    "balances": {
+      "pix": 10000,
+      "card": 5000,
+      "bank_slip": 0,
+      "total": 15000
+    }
+  }
+}</code></pre>
+                </div>
+
+                <h4>Campos da Response</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>ID do pedido de saque</td>
+                            </tr>
+                            <tr>
+                                <td><code>status</code></td>
+                                <td><code>pending</code>, <code>processing</code>, <code>completed</code>, <code>failed</code>, <code>rejected</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>has_baas</code></td>
+                                <td>Se há BaaS configurado para processamento automático</td>
+                            </tr>
+                            <tr>
+                                <td><code>can_auto_process</code></td>
+                                <td>Se o saque foi processado automaticamente via BaaS</td>
+                            </tr>
+                            <tr>
+                                <td><code>balances</code></td>
+                                <td>Saldos atualizados após o débito (em centavos)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Postback de Status</h3>
+                <p>Quando configurado, o <code>postback_url</code> receberá uma requisição POST a cada mudança de status do saque:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "id": 123,
+  "status": "completed",
+  "amount": 5000,
+  "type": "withdrawal",
+  "end_to_end_id": "E12345678901234567890123",
+  "rejection_reason": null
+}</code></pre>
+                </div>
+
+                <h4>Status do Saque</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-info">processing</span></td>
+                                <td>Em processamento no BaaS</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-success">completed</span></td>
+                                <td>Saque concluído com sucesso</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">failed</span></td>
+                                <td>Falha no processamento</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">rejected</span></td>
+                                <td>Rejeitado pelo admin ou BaaS</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </section>
 

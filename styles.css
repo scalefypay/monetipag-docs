@@ -484,6 +484,12 @@ tbody td code {
     border: 1px solid var(--border-color);
 }
 
+.badge-info {
+    background: rgba(59, 130, 246, 0.1);
+    color: #1d4ed8;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
 /* Footer */
 .footer {
     margin-top: 4rem;
