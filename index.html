@@ -32,6 +32,7 @@
                 <a href="#consultar-fatura" class="nav-item">Consultar Fatura</a>
                 <a href="#trocar-token" class="nav-item">Trocar Token</a>
                 <a href="#payout" class="nav-item">Payout (Saque)</a>
+                <a href="#listar-payouts" class="nav-item">Listar Payouts</a>
                 <a href="#saldo" class="nav-item">Consultar Saldo</a>
                 
                 <div class="nav-section">Referência</div>
@@ -871,6 +872,178 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                             <tr>
                                 <td><span class="badge badge-danger">rejected</span></td>
                                 <td>Rejeitado pelo admin ou BaaS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Listar Payouts -->
+            <section id="listar-payouts" class="section">
+                <h2>Listar Payouts</h2>
+                <div class="endpoint-badge">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/v2/payout</span>
+                </div>
+
+                <p>Lista todos os payouts da empresa autenticada.</p>
+
+                <div class="alert alert-info">
+                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no header <code>Authorization</code>.
+                </div>
+
+                <h3>Query Parameters</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th>Tipo</th>
+                                <th>Obrigatório</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>status</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Filtra por status. Aceita múltiplos separados por vírgula: <code>pending</code>, <code>completed</code>, <code>failed</code>, <code>rejected</code>, <code>processing</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>page</code></td>
+                                <td>int</td>
+                                <td>Não</td>
+                                <td>Número da página (default: 1)</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit</code></td>
+                                <td>int</td>
+                                <td>Não</td>
+                                <td>Itens por página. Se omitido, retorna todos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Exemplo de Request</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>HTTP</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>GET /api/v2/payout?status=completed,failed&page=1&limit=20</code></pre>
+                </div>
+
+                <h3>Exemplo de Response (200 OK)</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "data": [
+    {
+      "id": 123,
+      "amount": 50000,
+      "status": "completed",
+      "type": "withdrawal",
+      "end_to_end_id": "E123456789",
+      "rejection_reason": null,
+      "created_at": "2026-03-10T14:30:00Z",
+      "updated_at": "2026-03-10T15:00:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total_pages": 3,
+    "has_next": true,
+    "has_prev": false
+  }
+}</code></pre>
+                </div>
+
+                <h4>Campos da Resposta</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>int</td>
+                                <td>ID do payout</td>
+                            </tr>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>int</td>
+                                <td>Valor em centavos</td>
+                            </tr>
+                            <tr>
+                                <td><code>status</code></td>
+                                <td>string</td>
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou <code>rejected</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>type</code></td>
+                                <td>string</td>
+                                <td>Tipo do payout (<code>withdrawal</code> ou <code>anticipation</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><code>end_to_end_id</code></td>
+                                <td>string | null</td>
+                                <td>ID E2E do Pix (apenas quando <code>completed</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><code>rejection_reason</code></td>
+                                <td>string | null</td>
+                                <td>Motivo da rejeição (apenas quando <code>failed</code> ou <code>rejected</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><code>created_at</code></td>
+                                <td>datetime</td>
+                                <td>Data de criação</td>
+                            </tr>
+                            <tr>
+                                <td><code>updated_at</code></td>
+                                <td>datetime</td>
+                                <td>Última atualização</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Observação:</strong> O campo <code>pagination</code> só é retornado quando <code>limit</code> é informado.
+                </div>
+
+                <h3>Erros Possíveis</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-danger">401</span></td>
+                                <td>Token não informado ou inválido</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">403</span></td>
+                                <td>Nenhuma empresa associada ao token</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">500</span></td>
+                                <td>Erro interno ao consultar payouts</td>
                             </tr>
                         </tbody>
                     </table>
