@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,11 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar Navigation -->
@@ -18,15 +22,15 @@
                 <h1 class="logo">Monetipag</h1>
                 <p class="version">API v2</p>
             </div>
-            
+
             <nav class="nav-menu">
                 <a href="#introducao" class="nav-item active">Introdução</a>
                 <a href="#autenticacao" class="nav-item">Autenticação</a>
-                
+
                 <div class="nav-section">SDK JavaScript</div>
                 <a href="#sdk-instalacao" class="nav-item">Instalação</a>
                 <a href="#sdk-tokenizacao" class="nav-item">Tokenização</a>
-                
+
                 <div class="nav-section">Endpoints</div>
                 <a href="#criar-fatura" class="nav-item">Criar Fatura</a>
                 <a href="#consultar-fatura" class="nav-item">Consultar Fatura</a>
@@ -35,7 +39,7 @@
                 <a href="#listar-payouts" class="nav-item">Listar Payouts</a>
                 <a href="#consultar-payout" class="nav-item">Consultar Payout</a>
                 <a href="#saldo" class="nav-item">Consultar Saldo</a>
-                
+
                 <div class="nav-section">Referência</div>
                 <a href="#status-faturas" class="nav-item">Status das Faturas</a>
                 <a href="#codigos-erro" class="nav-item">Códigos de Erro</a>
@@ -49,7 +53,7 @@
             <section id="introducao" class="section">
                 <h1>Documentação da API monetipag</h1>
                 <p class="lead">Gateway de pagamento completo com suporte a PIX e Cartão de Crédito.</p>
-                
+
                 <div class="info-card">
                     <h3>URL Base</h3>
                     <code class="inline-code">https://api.monetipag.com</code>
@@ -60,7 +64,7 @@
             <section id="autenticacao" class="section">
                 <h2>Autenticação</h2>
                 <p>Todas as requisições à API devem incluir o header de autenticação:</p>
-                
+
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP Header</span>
@@ -68,17 +72,19 @@
                     </div>
                     <pre><code>Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
-                
+
                 <div class="alert alert-info">
-                    <strong>Importante:</strong> O token de autenticação deve ser obtido através do painel administrativo ou via endpoint de autenticação.
+                    <strong>Importante:</strong> O token de autenticação deve ser obtido através do painel
+                    administrativo ou via endpoint de autenticação.
                 </div>
             </section>
 
             <!-- SDK JavaScript -->
             <section id="sdk-instalacao" class="section">
                 <h2>SDK JavaScript (Frontend)</h2>
-                <p>O SDK JavaScript permite a tokenização segura de cartões de crédito diretamente no navegador, garantindo conformidade com PCI DSS.</p>
-                
+                <p>O SDK JavaScript permite a tokenização segura de cartões de crédito diretamente no navegador,
+                    garantindo conformidade com PCI DSS.</p>
+
                 <h3>Instalação</h3>
                 <div class="code-block">
                     <div class="code-header">
@@ -93,8 +99,9 @@
 
             <section id="sdk-tokenizacao" class="section">
                 <h3>Tokenização de Cartão</h3>
-                <p>Use o método <code class="inline-code">encrypt()</code> para tokenizar os dados do cartão antes de enviar para a API.</p>
-                
+                <p>Use o método <code class="inline-code">encrypt()</code> para tokenizar os dados do cartão antes de
+                    enviar para a API.</p>
+
                 <h4>Parâmetros</h4>
                 <div class="table-wrapper">
                     <table>
@@ -180,11 +187,11 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                     <span class="method post">POST</span>
                     <span class="path">/api/v2/invoices</span>
                 </div>
-                
+
                 <p>Cria uma nova fatura para pagamento via PIX ou Cartão de Crédito.</p>
 
                 <h3>Parâmetros do Body</h3>
-                
+
                 <h4>Nível Raiz</h4>
                 <div class="table-wrapper">
                     <table>
@@ -555,7 +562,7 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/invoices</span>
                 </div>
-                
+
                 <p>Consulta o status e detalhes de uma fatura existente.</p>
 
                 <h3>Query Parameters</h3>
@@ -618,7 +625,8 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>3D Secure:</strong> Para pagamentos com autenticação 3DS, a resposta incluirá o campo <code>url_3ds</code> com a URL de redirecionamento para autenticação.
+                    <strong>3D Secure:</strong> Para pagamentos com autenticação 3DS, a resposta incluirá o campo
+                    <code>url_3ds</code> com a URL de redirecionamento para autenticação.
                 </div>
             </section>
 
@@ -629,7 +637,7 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                     <span class="method post">POST</span>
                     <span class="path">/api/v2/tokens/exchange</span>
                 </div>
-                
+
                 <p>Troca um token temporário do SDK por um token persistente para transações recorrentes.</p>
 
                 <h3>Request Body</h3>
@@ -691,7 +699,8 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 <p>Solicita um saque via PIX para a conta cadastrada ou para uma chave PIX informada na requisição.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no header <code>Authorization</code>.
+                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
+                    header <code>Authorization</code>.
                 </div>
 
                 <h3>Parâmetros do Body</h3>
@@ -746,7 +755,9 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                                 <td><code>pix_key_type</code></td>
                                 <td>string</td>
                                 <td>Não</td>
-                                <td>Tipo da chave PIX: <code>cpf</code>, <code>cnpj</code>, <code>email</code>, <code>phone</code>, <code>random</code></td>
+                                <td>Tipo da chave PIX: <code>cpf</code>, <code>cnpj</code>, <code>email</code>,
+                                    <code>phone</code>, <code>random</code>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -813,7 +824,9 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                             </tr>
                             <tr>
                                 <td><code>status</code></td>
-                                <td><code>pending</code>, <code>processing</code>, <code>completed</code>, <code>failed</code>, <code>rejected</code></td>
+                                <td><code>pending</code>, <code>processing</code>, <code>completed</code>,
+                                    <code>failed</code>, <code>rejected</code>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>has_baas</code></td>
@@ -832,7 +845,8 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
                 <h3>Postback de Status</h3>
-                <p>Quando configurado, o <code>postback_url</code> receberá uma requisição POST a cada mudança de status do saque:</p>
+                <p>Quando configurado, o <code>postback_url</code> receberá uma requisição POST a cada mudança de status
+                    do saque:</p>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
@@ -890,7 +904,8 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 <p>Lista todos os payouts da empresa autenticada.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no header <code>Authorization</code>.
+                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
+                    header <code>Authorization</code>.
                 </div>
 
                 <h3>Query Parameters</h3>
@@ -909,7 +924,10 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                                 <td><code>status</code></td>
                                 <td>string</td>
                                 <td>Não</td>
-                                <td>Filtra por status. Aceita múltiplos separados por vírgula: <code>pending</code>, <code>completed</code>, <code>failed</code>, <code>rejected</code>, <code>processing</code></td>
+                                <td>Filtra por status. Aceita múltiplos separados por vírgula: <code>pending</code>,
+                                    <code>completed</code>, <code>failed</code>, <code>rejected</code>,
+                                    <code>processing</code>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>page</code></td>
@@ -989,7 +1007,9 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou <code>rejected</code></td>
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou
+                                    <code>rejected</code>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>type</code></td>
@@ -1021,7 +1041,8 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Observação:</strong> O campo <code>pagination</code> só é retornado quando <code>limit</code> é informado.
+                    <strong>Observação:</strong> O campo <code>pagination</code> só é retornado quando
+                    <code>limit</code> é informado.
                 </div>
 
                 <h3>Erros Possíveis</h3>
@@ -1056,13 +1077,14 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 <h2>Consultar Payout</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
-                    <span class="path">/payout/:id</span>
+                    <span class="path">/api/v2/payout/:id</span>
                 </div>
 
                 <p>Retorna o payload de webhook de um payout (withdrawal) da empresa do usuário autenticado.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Requer token de autenticação (userID via contexto Gin). O usuário deve estar associado a uma empresa.
+                    <strong>Autenticação:</strong> Requer token de autenticação (userID via contexto Gin). O usuário
+                    deve estar associado a uma empresa.
                 </div>
 
                 <h3>Path Parameters</h3>
@@ -1101,7 +1123,9 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                                 <td><code>by</code></td>
                                 <td>string</td>
                                 <td><code>tid</code></td>
-                                <td>Tipo de busca. Valores possíveis: <code>tid</code> (ou <code>id</code>), <code>external</code>, <code>transaction</code>, <code>e2e</code>, <code>any</code></td>
+                                <td>Tipo de busca. Valores possíveis: <code>tid</code> (ou <code>id</code>),
+                                    <code>external</code>, <code>transaction</code>, <code>e2e</code>, <code>any</code>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -1135,7 +1159,9 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                             </tr>
                             <tr>
                                 <td><code>any</code></td>
-                                <td>Tenta primeiro por ID numérico, depois por <code>external_id</code>, <code>transaction_id</code> ou <code>baas_end_to_end_id</code></td>
+                                <td>Tenta primeiro por ID numérico, depois por <code>external_id</code>,
+                                    <code>transaction_id</code> ou <code>baas_end_to_end_id</code>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -1188,7 +1214,9 @@ GET /payout/qualquer-valor?by=any</code></pre>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou <code>rejected</code></td>
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou
+                                    <code>rejected</code>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>amount</code></td>
@@ -1208,14 +1236,16 @@ GET /payout/qualquer-valor?by=any</code></pre>
                             <tr>
                                 <td><code>rejection_reason</code></td>
                                 <td>string | null</td>
-                                <td>Presente apenas quando <code>status = "failed"</code> ou <code>"rejected"</code></td>
+                                <td>Presente apenas quando <code>status = "failed"</code> ou <code>"rejected"</code>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>Normalização de status:</strong> Os status <code>pending</code> e qualquer valor desconhecido são normalizados para <code>processing</code>.
+                    <strong>Normalização de status:</strong> Os status <code>pending</code> e qualquer valor
+                    desconhecido são normalizados para <code>processing</code>.
                 </div>
 
                 <h3>Erros Possíveis</h3>
@@ -1275,7 +1305,8 @@ GET /payout/qualquer-valor?by=any</code></pre>
                 <p>Retorna o saldo disponível da empresa, separado por modalidade de pagamento.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no header <code>Authorization</code>.
+                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
+                    header <code>Authorization</code>.
                 </div>
 
                 <h3>Exemplo de Response (200 OK)</h3>
@@ -1330,7 +1361,7 @@ GET /payout/qualquer-valor?by=any</code></pre>
             <section id="status-faturas" class="section">
                 <h2>Status das Faturas</h2>
                 <p>Possíveis status de uma fatura:</p>
-                
+
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -1369,7 +1400,7 @@ GET /payout/qualquer-valor?by=any</code></pre>
             <section id="codigos-erro" class="section">
                 <h2>Códigos de Erro</h2>
                 <p>Códigos HTTP retornados pela API:</p>
-                
+
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -1411,7 +1442,8 @@ GET /payout/qualquer-valor?by=any</code></pre>
             <!-- Webhooks -->
             <section id="webhooks" class="section">
                 <h2>Postback (Webhook)</h2>
-                <p>Quando o campo <code>postback_url</code> é configurado na criação da fatura, a API enviará uma requisição POST para essa URL sempre que o status da fatura mudar.</p>
+                <p>Quando o campo <code>postback_url</code> é configurado na criação da fatura, a API enviará uma
+                    requisição POST para essa URL sempre que o status da fatura mudar.</p>
 
                 <h3>Payload do Webhook</h3>
                 <div class="code-block">
@@ -1430,7 +1462,8 @@ GET /payout/qualquer-valor?by=any</code></pre>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Dica:</strong> Seu endpoint deve responder com status HTTP 200 para confirmar o recebimento. A API tentará reenviar o webhook em caso de falha.
+                    <strong>Dica:</strong> Seu endpoint deve responder com status HTTP 200 para confirmar o recebimento.
+                    A API tentará reenviar o webhook em caso de falha.
                 </div>
             </section>
 
@@ -1444,4 +1477,5 @@ GET /payout/qualquer-valor?by=any</code></pre>
 
     <script src="script.js"></script>
 </body>
+
 </html>
