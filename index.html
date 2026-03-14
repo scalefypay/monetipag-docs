@@ -33,6 +33,7 @@
                 <a href="#trocar-token" class="nav-item">Trocar Token</a>
                 <a href="#payout" class="nav-item">Payout (Saque)</a>
                 <a href="#listar-payouts" class="nav-item">Listar Payouts</a>
+                <a href="#consultar-payout" class="nav-item">Consultar Payout</a>
                 <a href="#saldo" class="nav-item">Consultar Saldo</a>
                 
                 <div class="nav-section">Referência</div>
@@ -1044,6 +1045,219 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                             <tr>
                                 <td><span class="badge badge-danger">500</span></td>
                                 <td>Erro interno ao consultar payouts</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Get Payout by ID -->
+            <section id="consultar-payout" class="section">
+                <h2>Consultar Payout</h2>
+                <div class="endpoint-badge">
+                    <span class="method get">GET</span>
+                    <span class="path">/payout/:id</span>
+                </div>
+
+                <p>Retorna o payload de webhook de um payout (withdrawal) da empresa do usuário autenticado.</p>
+
+                <div class="alert alert-info">
+                    <strong>Autenticação:</strong> Requer token de autenticação (userID via contexto Gin). O usuário deve estar associado a uma empresa.
+                </div>
+
+                <h3>Path Parameters</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th>Tipo</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>string</td>
+                                <td>Identificador do payout (interpretado conforme o parâmetro <code>by</code>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Query Parameters</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th>Tipo</th>
+                                <th>Default</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>by</code></td>
+                                <td>string</td>
+                                <td><code>tid</code></td>
+                                <td>Tipo de busca. Valores possíveis: <code>tid</code> (ou <code>id</code>), <code>external</code>, <code>transaction</code>, <code>e2e</code>, <code>any</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Detalhes do parâmetro <code>by</code></h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Valor</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>tid</code> / <code>id</code></td>
+                                <td>Busca pelo ID interno (numérico) da WithdrawalOrder</td>
+                            </tr>
+                            <tr>
+                                <td><code>external</code></td>
+                                <td>Busca pelo <code>external_id</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>transaction</code></td>
+                                <td>Busca pelo <code>transaction_id</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>e2e</code></td>
+                                <td>Busca pelo <code>baas_end_to_end_id</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>any</code></td>
+                                <td>Tenta primeiro por ID numérico, depois por <code>external_id</code>, <code>transaction_id</code> ou <code>baas_end_to_end_id</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Exemplos de Request</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>HTTP</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>GET /payout/42?by=tid
+GET /payout/abc123?by=external
+GET /payout/E00012345?by=e2e
+GET /payout/qualquer-valor?by=any</code></pre>
+                </div>
+
+                <h3>Response 200 OK</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "id": 123,
+  "status": "completed",
+  "amount": 15000,
+  "type": "withdrawal",
+  "end_to_end_id": "E123456789",
+  "rejection_reason": null
+}</code></pre>
+                </div>
+
+                <h4>Campos da Resposta</h4>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Campo</th>
+                                <th>Tipo</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>integer / string</td>
+                                <td>ID do payout</td>
+                            </tr>
+                            <tr>
+                                <td><code>status</code></td>
+                                <td>string</td>
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou <code>rejected</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>integer</td>
+                                <td>Valor em centavos</td>
+                            </tr>
+                            <tr>
+                                <td><code>type</code></td>
+                                <td>string</td>
+                                <td>Sempre <code>"withdrawal"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>end_to_end_id</code></td>
+                                <td>string | null</td>
+                                <td>Presente apenas quando <code>status = "completed"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>rejection_reason</code></td>
+                                <td>string | null</td>
+                                <td>Presente apenas quando <code>status = "failed"</code> ou <code>"rejected"</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Normalização de status:</strong> Os status <code>pending</code> e qualquer valor desconhecido são normalizados para <code>processing</code>.
+                </div>
+
+                <h3>Erros Possíveis</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Corpo</th>
+                                <th>Quando</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-danger">401</span></td>
+                                <td><code>{"error": "User not authenticated"}</code></td>
+                                <td>Token ausente ou inválido</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">403</span></td>
+                                <td><code>{"error": "No company found for this user"}</code></td>
+                                <td>Usuário sem empresa associada</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-warning">400</span></td>
+                                <td><code>{"error": "id must be numeric when by=tid"}</code></td>
+                                <td><code>by=tid</code> com ID não numérico</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-warning">400</span></td>
+                                <td><code>{"error": "invalid 'by' param"}</code></td>
+                                <td>Valor inválido no parâmetro <code>by</code></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">404</span></td>
+                                <td><code>{"error": "withdrawal not found"}</code></td>
+                                <td>Payout não encontrado para a empresa</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">500</span></td>
+                                <td><code>{"error": "database error"}</code></td>
+                                <td>Erro interno de banco de dados</td>
                             </tr>
                         </tbody>
                     </table>
