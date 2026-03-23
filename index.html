@@ -34,6 +34,7 @@
                 <div class="nav-section">Endpoints</div>
                 <a href="#criar-fatura" class="nav-item">Criar Fatura</a>
                 <a href="#consultar-fatura" class="nav-item">Consultar Fatura</a>
+                <a href="#listar-faturas" class="nav-item">Listar Faturas</a>
                 <a href="#trocar-token" class="nav-item">Trocar Token</a>
                 <a href="#payout" class="nav-item">Payout (Saque)</a>
                 <a href="#listar-payouts" class="nav-item">Listar Payouts</a>
@@ -560,7 +561,7 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                 <h2>Consultar Fatura</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
-                    <span class="path">/api/v2/invoices</span>
+                    <span class="path">/api/v2/invoices/:id</span>
                 </div>
 
                 <p>Consulta o status e detalhes de uma fatura existente.</p>
@@ -593,7 +594,7 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                         <span>HTTP</span>
                         <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
-                    <pre><code>GET https://api.monetipag.com/api/v2/invoices?id=inv_123456789
+                    <pre><code>GET https://api.monetipag.com/api/v2/invoices/inv_123456789
 Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
@@ -611,8 +612,30 @@ Authorization: Bearer &lt;token&gt;</code></pre>
   "currency": "BRL",
   "paid_at": "2026-02-11T14:20:00Z",
   "payer": {
-    "name": "João Silva",
-    "email": "joao@example.com"
+    "name": "[REDACTED_PII]",
+    "email": "[REDACTED_PII]",
+    "phone": "[REDACTED_PII]",
+    "document": "***.***.***-34",
+    "address": {
+      "street": "[REDACTED_ADDRESS]",
+      "city": "[REDACTED_ADDRESS]",
+      "state": "[REDACTED_ADDRESS]",
+      "zip_code": "[REDACTED_ADDRESS]"
+    }
+  },
+  "payee": {
+    "document": "**.***.***/**34-**",
+    "pix_key": "****ab34",
+    "bank": {
+      "account": "[REDACTED_ADDRESS]",
+      "agency": "[REDACTED_ADDRESS]"
+    }
+  },
+  "client": {
+    "name": "[REDACTED_PII]",
+    "email": "[REDACTED_PII]",
+    "phone": "[REDACTED_PII]",
+    "cpfcnpj": "***.***.**0-34"
   },
   "items": [
     {
@@ -624,9 +647,155 @@ Authorization: Bearer &lt;token&gt;</code></pre>
 }</code></pre>
                 </div>
 
+                <div class="alert alert-info">
+                    <strong>PCI DSS:</strong> Em conformidade com PCI DSS, os dados sensíveis são ofuscados na resposta.
+                    Campos como <code>name</code>, <code>email</code> e <code>phone</code> retornam <code>[REDACTED_PII]</code>,
+                    endereços retornam <code>[REDACTED_ADDRESS]</code>, e documentos (<code>document</code>, <code>cpfcnpj</code>)
+                    exibem apenas os últimos 4 dígitos visíveis.
+                </div>
+
                 <div class="alert alert-warning">
                     <strong>3D Secure:</strong> Para pagamentos com autenticação 3DS, a resposta incluirá o campo
                     <code>url_3ds</code> com a URL de redirecionamento para autenticação.
+                </div>
+            </section>
+
+            <!-- List Invoices -->
+            <section id="listar-faturas" class="section">
+                <h2>Listar Faturas</h2>
+                <div class="endpoint-badge">
+                    <span class="method get">GET</span>
+                    <span class="path">/api/v2/invoices</span>
+                </div>
+
+                <p>Lista as faturas da empresa autenticada, com suporte a filtros e paginação.</p>
+
+                <h3>Query Parameters</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th>Tipo</th>
+                                <th>Obrigatório</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>page</code></td>
+                                <td>int</td>
+                                <td>Não</td>
+                                <td>Número da página (default: <code>1</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><code>limit</code></td>
+                                <td>int</td>
+                                <td>Não</td>
+                                <td>Itens por página (default: <code>20</code>, máximo: <code>100</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><code>start_date</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Data inicial no formato <code>YYYY-MM-DD</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>end_date</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Data final no formato <code>YYYY-MM-DD</code> (inclusive até 23:59:59)</td>
+                            </tr>
+                            <tr>
+                                <td><code>payment_method</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Método de pagamento: <code>pix</code>, <code>credit_card</code> ou <code>bank_slip</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>status</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Status da fatura: <code>paid</code>, <code>pending</code>, <code>refused</code>, <code>canceled</code>, <code>chargeback</code>, <code>refunded</code>, etc.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Exemplos de Request</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>HTTP</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>GET https://api.monetipag.com/api/v2/invoices
+Authorization: Bearer &lt;token&gt;
+
+# Com paginação
+GET https://api.monetipag.com/api/v2/invoices?page=1&amp;limit=10
+
+# Com filtro de data
+GET https://api.monetipag.com/api/v2/invoices?start_date=2026-01-01&amp;end_date=2026-01-31
+
+# Com filtro de método e status
+GET https://api.monetipag.com/api/v2/invoices?payment_method=pix&amp;status=paid
+
+# Combinando filtros
+GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=pending&amp;page=2&amp;limit=50</code></pre>
+                </div>
+
+                <h3>Exemplo de Response</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span>JSON</span>
+                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                    </div>
+                    <pre><code>{
+  "data": [
+    {
+      "invoice_id": "inv_abc123",
+      "invoice_id_external": "ext_001",
+      "invoice_id_external2": null,
+      "invoice_id_external3": null,
+      "status": "paid",
+      "payment_method": "pix",
+      "value_total": 15000,
+      "value_seller": 14500,
+      "installments": 1,
+      "created_at": "2026-03-20T14:30:00Z",
+      "updated_at": "2026-03-20T14:35:00Z",
+      "client": {
+        "id": 42,
+        "name": "[REDACTED_PII]",
+        "email": "[REDACTED_PII]",
+        "phone": "[REDACTED_PII]",
+        "cpfcnpj": "***.***.**0-34"
+      }
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 150,
+    "total_pages": 8,
+    "has_next": true,
+    "has_prev": false
+  }
+}</code></pre>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>PCI DSS:</strong> Os dados do <code>client</code> são sanitizados seguindo o mesmo padrão
+                    do endpoint de consulta individual. Campos PII retornam <code>[REDACTED_PII]</code> e documentos
+                    exibem apenas os últimos 4 dígitos.
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Ordenação:</strong> Os resultados são ordenados por <code>created_at</code> decrescente (mais recentes primeiro).
+                </div>
+
+                <div class="alert alert-warning">
+                    <strong>Nota:</strong> O endpoint retorna apenas faturas da empresa vinculada ao token autenticado.
                 </div>
             </section>
 
@@ -941,6 +1110,18 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                                 <td>Não</td>
                                 <td>Itens por página. Se omitido, retorna todos</td>
                             </tr>
+                            <tr>
+                                <td><code>start_date</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Data inicial no formato <code>YYYY-MM-DD</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>end_date</code></td>
+                                <td>string</td>
+                                <td>Não</td>
+                                <td>Data final no formato <code>YYYY-MM-DD</code> (inclusive até 23:59:59)</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -951,7 +1132,13 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                         <span>HTTP</span>
                         <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
                     </div>
-                    <pre><code>GET /api/v2/payout?status=completed,failed&page=1&limit=20</code></pre>
+                    <pre><code>GET /api/v2/payout?status=completed,failed&amp;page=1&amp;limit=20
+
+# Com filtro de data
+GET /api/v2/payout?start_date=2026-01-01&amp;end_date=2026-01-31
+
+# Combinando filtros
+GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03-31&amp;page=1&amp;limit=50</code></pre>
                 </div>
 
                 <h3>Exemplo de Response (200 OK)</h3>
