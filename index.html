@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Documentação oficial da API Monetipag - Gateway de pagamento completo">
+    <meta name="description" content="Official Monetipag API Documentation - Complete payment gateway">
     <title>Monetipag API Documentation</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,26 +24,26 @@
             </div>
 
             <nav class="nav-menu">
-                <a href="#introducao" class="nav-item active">Introdução</a>
-                <a href="#autenticacao" class="nav-item">Autenticação</a>
+                <a href="#introducao" class="nav-item active">Introduction</a>
+                <a href="#autenticacao" class="nav-item">Authentication</a>
 
-                <div class="nav-section">SDK JavaScript</div>
-                <a href="#sdk-instalacao" class="nav-item">Instalação</a>
-                <a href="#sdk-tokenizacao" class="nav-item">Tokenização</a>
+                <div class="nav-section">JavaScript SDK</div>
+                <a href="#sdk-instalacao" class="nav-item">Installation</a>
+                <a href="#sdk-tokenizacao" class="nav-item">Tokenization</a>
 
                 <div class="nav-section">Endpoints</div>
-                <a href="#criar-fatura" class="nav-item">Criar Fatura</a>
-                <a href="#consultar-fatura" class="nav-item">Consultar Fatura</a>
-                <a href="#listar-faturas" class="nav-item">Listar Faturas</a>
-                <a href="#trocar-token" class="nav-item">Trocar Token</a>
-                <a href="#payout" class="nav-item">Payout (Saque)</a>
-                <a href="#listar-payouts" class="nav-item">Listar Payouts</a>
-                <a href="#consultar-payout" class="nav-item">Consultar Payout</a>
-                <a href="#saldo" class="nav-item">Consultar Saldo</a>
+                <a href="#criar-fatura" class="nav-item">Create Invoice</a>
+                <a href="#consultar-fatura" class="nav-item">Get Invoice</a>
+                <a href="#listar-faturas" class="nav-item">List Invoices</a>
+                <a href="#payout" class="nav-item">Payout (Withdrawal)</a>
+                <a href="#listar-payouts" class="nav-item">List Payouts</a>
+                <a href="#consultar-payout" class="nav-item">Get Payout</a>
+                <a href="#saldo" class="nav-item">Check Balance</a>
+                <a href="#trocar-token" class="nav-item">Exchange Token</a>
 
-                <div class="nav-section">Referência</div>
-                <a href="#status-faturas" class="nav-item">Status das Faturas</a>
-                <a href="#codigos-erro" class="nav-item">Códigos de Erro</a>
+                <div class="nav-section">Reference</div>
+                <a href="#status-faturas" class="nav-item">Invoice Statuses</a>
+                <a href="#codigos-erro" class="nav-item">Error Codes</a>
                 <a href="#webhooks" class="nav-item">Webhooks</a>
             </nav>
         </aside>
@@ -52,45 +52,45 @@
         <main class="content">
             <!-- Introduction -->
             <section id="introducao" class="section">
-                <h1>Documentação da API monetipag</h1>
-                <p class="lead">Gateway de pagamento completo com suporte a PIX e Cartão de Crédito.</p>
+                <h1>Monetipag API Documentation</h1>
+                <p class="lead">Complete payment gateway with support for PIX and Credit Card.</p>
 
                 <div class="info-card">
-                    <h3>URL Base</h3>
+                    <h3>Base URL</h3>
                     <code class="inline-code">https://api.monetipag.com</code>
                 </div>
             </section>
 
             <!-- Authentication -->
             <section id="autenticacao" class="section">
-                <h2>Autenticação</h2>
-                <p>Todas as requisições à API devem incluir o header de autenticação:</p>
+                <h2>Authentication</h2>
+                <p>All API requests must include the authentication header:</p>
 
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP Header</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Importante:</strong> O token de autenticação deve ser obtido através do painel
-                    administrativo ou via endpoint de autenticação.
+                    <strong>Important:</strong> The authentication token must be obtained via the admin
+                    panel or through the authentication endpoint.
                 </div>
             </section>
 
             <!-- SDK JavaScript -->
             <section id="sdk-instalacao" class="section">
-                <h2>SDK JavaScript (Frontend)</h2>
-                <p>O SDK JavaScript permite a tokenização segura de cartões de crédito diretamente no navegador,
-                    garantindo conformidade com PCI DSS.</p>
+                <h2>JavaScript SDK (Frontend)</h2>
+                <p>The JavaScript SDK enables secure credit card tokenization directly in the browser,
+                    ensuring PCI DSS compliance.</p>
 
-                <h3>Instalação</h3>
+                <h3>Installation</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTML</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>&lt;script type="module"&gt;
   import { createCh } from "https://scalefy.sfo3.cdn.digitaloceanspaces.com/sdk/v1/script.min.js";
@@ -99,61 +99,61 @@
             </section>
 
             <section id="sdk-tokenizacao" class="section">
-                <h3>Tokenização de Cartão</h3>
-                <p>Use o método <code class="inline-code">encrypt()</code> para tokenizar os dados do cartão antes de
-                    enviar para a API.</p>
+                <h3>Card Tokenization</h3>
+                <p>Use the <code class="inline-code">encrypt()</code> method to tokenize card data before
+                    sending it to the API.</p>
 
-                <h4>Parâmetros</h4>
+                <h4>Parameters</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>number</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Número do cartão (sem espaços)</td>
+                                <td>Yes</td>
+                                <td>Card number (no spaces)</td>
                             </tr>
                             <tr>
                                 <td><code>holder_name</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Nome impresso no cartão</td>
+                                <td>Yes</td>
+                                <td>Name printed on the card</td>
                             </tr>
                             <tr>
                                 <td><code>exp_month</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Mês de expiração (MM)</td>
+                                <td>Yes</td>
+                                <td>Expiry month (MM)</td>
                             </tr>
                             <tr>
                                 <td><code>exp_year</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Ano de expiração (YYYY)</td>
+                                <td>Yes</td>
+                                <td>Expiry year (YYYY)</td>
                             </tr>
                             <tr>
                                 <td><code>cvv</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Código de segurança (3-4 dígitos)</td>
+                                <td>Yes</td>
+                                <td>Security code (3-4 digits)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h4>Exemplo de Uso</h4>
+                <h4>Usage Example</h4>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JavaScript</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>import { createCh } from "https://scalefy.sfo3.cdn.digitaloceanspaces.com/sdk/v1/script.min.js";
 
@@ -166,14 +166,14 @@ const cardData = {
 };
 
 const token = await createCh.encrypt(cardData);
-console.log(token); // Use este token na criação da fatura</code></pre>
+console.log(token); // Use this token when creating the invoice</code></pre>
                 </div>
 
-                <h4>Resposta</h4>
+                <h4>Response</h4>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "token": "tok_abc123xyz456..."
@@ -198,280 +198,280 @@ console.log(token); // Use este token na criação da fatura</code></pre>
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>method</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Método de pagamento: <code>pix</code> ou <code>credit_card</code></td>
+                                <td>Yes</td>
+                                <td>Payment method: <code>pix</code> or <code>credit_card</code></td>
                             </tr>
                             <tr>
                                 <td><code>product_fisical</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Indica se o produto é físico</td>
+                                <td>No</td>
+                                <td>Indicates whether the product is physical</td>
                             </tr>
                             <tr>
                                 <td><code>ip_payer</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>IP do pagador</td>
+                                <td>No</td>
+                                <td>Payer IP address</td>
                             </tr>
                             <tr>
                                 <td><code>total_price_cents</code></td>
                                 <td>integer</td>
-                                <td>Não</td>
-                                <td>Valor total em centavos (se não informado, é calculado a partir dos itens)</td>
+                                <td>No</td>
+                                <td>Total amount in cents (if not provided, calculated from items)</td>
                             </tr>
                             <tr>
                                 <td><code>postback_url</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>URL para receber notificações de mudança de status</td>
+                                <td>No</td>
+                                <td>URL to receive status change notifications</td>
                             </tr>
                             <tr>
                                 <td><code>payer</code></td>
                                 <td>object</td>
-                                <td>Sim</td>
-                                <td>Dados do pagador</td>
+                                <td>Yes</td>
+                                <td>Payer data</td>
                             </tr>
                             <tr>
                                 <td><code>card</code></td>
                                 <td>object</td>
-                                <td>Condicional</td>
-                                <td>Obrigatório se <code>method = credit_card</code></td>
+                                <td>Conditional</td>
+                                <td>Required if <code>method = credit_card</code></td>
                             </tr>
                             <tr>
                                 <td><code>items</code></td>
                                 <td>array</td>
-                                <td>Sim</td>
-                                <td>Lista de itens da fatura</td>
+                                <td>Yes</td>
+                                <td>List of invoice items</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h4>Objeto <code>payer</code></h4>
+                <h4><code>payer</code> Object</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>name</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Nome completo do pagador</td>
+                                <td>Yes</td>
+                                <td>Payer full name</td>
                             </tr>
                             <tr>
                                 <td><code>cpf_cnpj</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>CPF ou CNPJ (apenas números)</td>
+                                <td>Yes</td>
+                                <td>CPF or CNPJ (digits only)</td>
                             </tr>
                             <tr>
                                 <td><code>email</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>E-mail do pagador</td>
+                                <td>Yes</td>
+                                <td>Payer e-mail</td>
                             </tr>
                             <tr>
                                 <td><code>phone</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Telefone com DDD</td>
+                                <td>Yes</td>
+                                <td>Phone with area code</td>
                             </tr>
                             <tr>
                                 <td><code>address_zip</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>CEP (apenas números)</td>
+                                <td>Yes</td>
+                                <td>ZIP code (digits only)</td>
                             </tr>
                             <tr>
                                 <td><code>address_line</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Logradouro (rua, avenida, etc.)</td>
+                                <td>Yes</td>
+                                <td>Street address (street, avenue, etc.)</td>
                             </tr>
                             <tr>
                                 <td><code>address_number</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Número do endereço</td>
+                                <td>Yes</td>
+                                <td>Address number</td>
                             </tr>
                             <tr>
                                 <td><code>address_complement</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Complemento do endereço</td>
+                                <td>No</td>
+                                <td>Address complement</td>
                             </tr>
                             <tr>
                                 <td><code>address_city</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Cidade</td>
+                                <td>Yes</td>
+                                <td>City</td>
                             </tr>
                             <tr>
                                 <td><code>address_state</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Estado (sigla, ex: SP)</td>
+                                <td>Yes</td>
+                                <td>State (abbreviation, e.g. SP)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h4>Objeto <code>card</code></h4>
+                <h4><code>card</code> Object</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>token</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Token gerado pelo SDK (use no lugar dos dados brutos do cartão)</td>
+                                <td>Conditional</td>
+                                <td>Token generated by the SDK (use instead of raw card data)</td>
                             </tr>
                             <tr>
                                 <td><code>installment</code></td>
                                 <td>integer</td>
-                                <td>Não</td>
-                                <td>Número de parcelas</td>
+                                <td>No</td>
+                                <td>Number of installments</td>
                             </tr>
                             <tr>
                                 <td><code>number</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Número do cartão (use somente se não utilizar token)</td>
+                                <td>Conditional</td>
+                                <td>Card number (only if not using token)</td>
                             </tr>
                             <tr>
                                 <td><code>first_name</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Primeiro nome impresso no cartão</td>
+                                <td>Conditional</td>
+                                <td>First name printed on the card</td>
                             </tr>
                             <tr>
                                 <td><code>last_name</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Sobrenome impresso no cartão</td>
+                                <td>Conditional</td>
+                                <td>Last name printed on the card</td>
                             </tr>
                             <tr>
                                 <td><code>month</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Mês de expiração (MM)</td>
+                                <td>Conditional</td>
+                                <td>Expiry month (MM)</td>
                             </tr>
                             <tr>
                                 <td><code>year</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Ano de expiração (YYYY)</td>
+                                <td>Conditional</td>
+                                <td>Expiry year (YYYY)</td>
                             </tr>
                             <tr>
                                 <td><code>security_code</code></td>
                                 <td>string</td>
-                                <td>Condicional</td>
-                                <td>Código de segurança (CVV)</td>
+                                <td>Conditional</td>
+                                <td>Security code (CVV)</td>
                             </tr>
                             <tr>
                                 <td><code>cavv</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Valor de autenticação para 3D Secure</td>
+                                <td>No</td>
+                                <td>Authentication value for 3D Secure</td>
                             </tr>
                             <tr>
                                 <td><code>xid</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>ID de transação para 3D Secure</td>
+                                <td>No</td>
+                                <td>Transaction ID for 3D Secure</td>
                             </tr>
                             <tr>
                                 <td><code>eci</code></td>
                                 <td>string</td>
-                                <td>Não</td>
+                                <td>No</td>
                                 <td>Electronic Commerce Indicator (3D Secure)</td>
                             </tr>
                             <tr>
                                 <td><code>version</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Versão do protocolo 3D Secure</td>
+                                <td>No</td>
+                                <td>3D Secure protocol version</td>
                             </tr>
                             <tr>
                                 <td><code>referenceid</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>ID de referência da autenticação 3D Secure</td>
+                                <td>No</td>
+                                <td>3D Secure authentication reference ID</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h4>Objeto <code>items</code></h4>
+                <h4><code>items</code> Object</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>name</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Nome do item</td>
+                                <td>Yes</td>
+                                <td>Item name</td>
                             </tr>
                             <tr>
                                 <td><code>description</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Descrição do item</td>
+                                <td>No</td>
+                                <td>Item description</td>
                             </tr>
                             <tr>
                                 <td><code>quantity</code></td>
                                 <td>integer</td>
-                                <td>Sim</td>
-                                <td>Quantidade</td>
+                                <td>Yes</td>
+                                <td>Quantity</td>
                             </tr>
                             <tr>
                                 <td><code>unit_price</code></td>
                                 <td>integer</td>
-                                <td>Sim</td>
-                                <td>Preço unitário em centavos</td>
+                                <td>Yes</td>
+                                <td>Unit price in cents</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplo de Request (PIX)</h3>
+                <h3>Request Example (PIX)</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "method": "pix",
@@ -499,11 +499,11 @@ console.log(token); // Use este token na criação da fatura</code></pre>
 }</code></pre>
                 </div>
 
-                <h3>Exemplo de Request (Cartão de Crédito)</h3>
+                <h3>Request Example (Credit Card)</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "method": "credit_card",
@@ -536,11 +536,11 @@ console.log(token); // Use este token na criação da fatura</code></pre>
 }</code></pre>
                 </div>
 
-                <h3>Exemplo de Response</h3>
+                <h3>Response Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "invoice_id": "inv_123456789",
@@ -558,51 +558,51 @@ console.log(token); // Use este token na criação da fatura</code></pre>
 
             <!-- Get Invoice -->
             <section id="consultar-fatura" class="section">
-                <h2>Consultar Fatura</h2>
+                <h2>Get Invoice</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/invoices/:id</span>
                 </div>
 
-                <p>Consulta o status e detalhes de uma fatura existente.</p>
+                <p>Retrieves the status and details of an existing invoice.</p>
 
                 <h3>Query Parameters</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Parâmetro</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>id</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>ID da fatura</td>
+                                <td>Yes</td>
+                                <td>Invoice ID</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplo de Request</h3>
+                <h3>Request Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>GET https://api.monetipag.com/api/v2/invoices/inv_123456789
 Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
-                <h3>Exemplo de Response</h3>
+                <h3>Response Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "invoice_id": "inv_123456789",
@@ -648,107 +648,112 @@ Authorization: Bearer &lt;token&gt;</code></pre>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>PCI DSS:</strong> Em conformidade com PCI DSS, os dados sensíveis são ofuscados na resposta.
-                    Campos como <code>name</code>, <code>email</code> e <code>phone</code> retornam <code>[REDACTED_PII]</code>,
-                    endereços retornam <code>[REDACTED_ADDRESS]</code>, e documentos (<code>document</code>, <code>cpfcnpj</code>)
-                    exibem apenas os últimos 4 dígitos visíveis.
+                    <strong>PCI DSS:</strong> In compliance with PCI DSS, sensitive data is obfuscated in the response.
+                    Fields such as <code>name</code>, <code>email</code> and <code>phone</code> return
+                    <code>[REDACTED_PII]</code>,
+                    addresses return <code>[REDACTED_ADDRESS]</code>, and documents (<code>document</code>,
+                    <code>cpfcnpj</code>)
+                    show only the last 4 visible digits.
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>3D Secure:</strong> Para pagamentos com autenticação 3DS, a resposta incluirá o campo
-                    <code>url_3ds</code> com a URL de redirecionamento para autenticação.
+                    <strong>3D Secure:</strong> For payments with 3DS authentication, the response will include the
+                    <code>url_3ds</code> field with the redirect URL for authentication.
                 </div>
             </section>
 
             <!-- List Invoices -->
             <section id="listar-faturas" class="section">
-                <h2>Listar Faturas</h2>
+                <h2>List Invoices</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/invoices</span>
                 </div>
 
-                <p>Lista as faturas da empresa autenticada, com suporte a filtros e paginação.</p>
+                <p>Lists the invoices for the authenticated company, with support for filters and pagination.</p>
 
                 <h3>Query Parameters</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Parâmetro</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>page</code></td>
                                 <td>int</td>
-                                <td>Não</td>
-                                <td>Número da página (default: <code>1</code>)</td>
+                                <td>No</td>
+                                <td>Page number (default: <code>1</code>)</td>
                             </tr>
                             <tr>
                                 <td><code>limit</code></td>
                                 <td>int</td>
-                                <td>Não</td>
-                                <td>Itens por página (default: <code>20</code>, máximo: <code>100</code>)</td>
+                                <td>No</td>
+                                <td>Items per page (default: <code>20</code>, max: <code>100</code>)</td>
                             </tr>
                             <tr>
                                 <td><code>start_date</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Data inicial no formato <code>YYYY-MM-DD</code></td>
+                                <td>No</td>
+                                <td>Start date in <code>YYYY-MM-DD</code> format</td>
                             </tr>
                             <tr>
                                 <td><code>end_date</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Data final no formato <code>YYYY-MM-DD</code> (inclusive até 23:59:59)</td>
+                                <td>No</td>
+                                <td>End date in <code>YYYY-MM-DD</code> format (inclusive up to 23:59:59)</td>
                             </tr>
                             <tr>
                                 <td><code>payment_method</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Método de pagamento: <code>pix</code>, <code>credit_card</code> ou <code>bank_slip</code></td>
+                                <td>No</td>
+                                <td>Payment method: <code>pix</code>, <code>credit_card</code> or <code>bank_slip</code>
+                                </td>
                             </tr>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Status da fatura: <code>paid</code>, <code>pending</code>, <code>refused</code>, <code>canceled</code>, <code>chargeback</code>, <code>refunded</code>, etc.</td>
+                                <td>No</td>
+                                <td>Invoice status: <code>paid</code>, <code>pending</code>, <code>refused</code>,
+                                    <code>canceled</code>, <code>chargeback</code>, <code>refunded</code>, etc.
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplos de Request</h3>
+                <h3>Request Examples</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>GET https://api.monetipag.com/api/v2/invoices
 Authorization: Bearer &lt;token&gt;
 
-# Com paginação
+# With pagination
 GET https://api.monetipag.com/api/v2/invoices?page=1&amp;limit=10
 
-# Com filtro de data
+# With date filter
 GET https://api.monetipag.com/api/v2/invoices?start_date=2026-01-01&amp;end_date=2026-01-31
 
-# Com filtro de método e status
+# With method and status filter
 GET https://api.monetipag.com/api/v2/invoices?payment_method=pix&amp;status=paid
 
-# Combinando filtros
+# Combining filters
 GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=pending&amp;page=2&amp;limit=50</code></pre>
                 </div>
 
-                <h3>Exemplo de Response</h3>
+                <h3>Response Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "data": [
@@ -785,68 +790,69 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>PCI DSS:</strong> Os dados do <code>client</code> são sanitizados seguindo o mesmo padrão
-                    do endpoint de consulta individual. Campos PII retornam <code>[REDACTED_PII]</code> e documentos
-                    exibem apenas os últimos 4 dígitos.
+                    <strong>PCI DSS:</strong> The <code>client</code> data is sanitized following the same standard
+                    as the individual query endpoint. PII fields return <code>[REDACTED_PII]</code> and documents
+                    show only the last 4 digits.
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Ordenação:</strong> Os resultados são ordenados por <code>created_at</code> decrescente (mais recentes primeiro).
+                    <strong>Ordering:</strong> Results are ordered by <code>created_at</code> descending (newest first).
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>Nota:</strong> O endpoint retorna apenas faturas da empresa vinculada ao token autenticado.
+                    <strong>Note:</strong> The endpoint returns only invoices belonging to the company linked to the
+                    authenticated token.
                 </div>
             </section>
 
             <!-- Exchange Token -->
             <section id="trocar-token" class="section">
-                <h2>Trocar Token</h2>
+                <h2>Exchange Token</h2>
                 <div class="endpoint-badge">
                     <span class="method post">POST</span>
                     <span class="path">/api/v2/tokens/exchange</span>
                 </div>
 
-                <p>Troca um token temporário do SDK por um token persistente para transações recorrentes.</p>
+                <p>Exchanges a temporary SDK token for a persistent token for recurring transactions.</p>
 
                 <h3>Request Body</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>temporary_token</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Token temporário gerado pelo SDK</td>
+                                <td>Yes</td>
+                                <td>Temporary token generated by the SDK</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplo de Request</h3>
+                <h3>Request Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "temporary_token": "tok_temp_abc123..."
 }</code></pre>
                 </div>
 
-                <h3>Exemplo de Response</h3>
+                <h3>Response Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "persistent_token": "tok_persist_xyz789...",
@@ -859,72 +865,73 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
 
             <!-- Payout -->
             <section id="payout" class="section">
-                <h2>Payout (Saque)</h2>
+                <h2>Payout (Withdrawal)</h2>
                 <div class="endpoint-badge">
                     <span class="method post">POST</span>
                     <span class="path">/api/v2/payout</span>
                 </div>
 
-                <p>Solicita um saque via PIX para a conta cadastrada ou para uma chave PIX informada na requisição.</p>
+                <p>Requests a PIX withdrawal to the registered account or to a PIX key provided in the request.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
-                    header <code>Authorization</code>.
+                    <strong>Authentication:</strong> This endpoint requires the <strong>private API Key</strong> sent in
+                    the
+                    <code>Authorization</code> header.
                 </div>
 
-                <h3>Parâmetros do Body</h3>
+                <h3>Body Parameters</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>amount</code></td>
                                 <td>integer</td>
-                                <td>Sim</td>
-                                <td>Valor em centavos (mínimo 1000 = R$10,00)</td>
+                                <td>Yes</td>
+                                <td>Amount in cents (minimum 1000 = R$10.00)</td>
                             </tr>
                             <tr>
                                 <td><code>type</code></td>
                                 <td>string</td>
-                                <td>Sim</td>
-                                <td>Sempre <code>"withdrawal"</code></td>
+                                <td>Yes</td>
+                                <td>Always <code>"withdrawal"</code></td>
                             </tr>
                             <tr>
                                 <td><code>description</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Descrição livre</td>
+                                <td>No</td>
+                                <td>Free-form description</td>
                             </tr>
                             <tr>
                                 <td><code>notes</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Observações adicionais</td>
+                                <td>No</td>
+                                <td>Additional notes</td>
                             </tr>
                             <tr>
                                 <td><code>postback_url</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>URL para receber notificações de mudança de status</td>
+                                <td>No</td>
+                                <td>URL to receive status change notifications</td>
                             </tr>
                             <tr>
                                 <td><code>pix_key</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Chave PIX de destino (se diferente da cadastrada)</td>
+                                <td>No</td>
+                                <td>Destination PIX key (if different from the registered one)</td>
                             </tr>
                             <tr>
                                 <td><code>pix_key_type</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Tipo da chave PIX: <code>cpf</code>, <code>cnpj</code>, <code>email</code>,
+                                <td>No</td>
+                                <td>PIX key type: <code>cpf</code>, <code>cnpj</code>, <code>email</code>,
                                     <code>phone</code>, <code>random</code>
                                 </td>
                             </tr>
@@ -932,38 +939,38 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
                     </table>
                 </div>
 
-                <h3>Exemplo de Request</h3>
+                <h3>Request Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "amount": 5000,
   "type": "withdrawal",
-  "description": "Saque mensal",
-  "notes": "Observação opcional",
-  "postback_url": "https://seusite.com/webhook/withdraw",
-  "pix_key": "email@exemplo.com",
+  "description": "Monthly withdrawal",
+  "notes": "Optional note",
+  "postback_url": "https://yoursite.com/webhook/withdraw",
+  "pix_key": "email@example.com",
   "pix_key_type": "email"
 }</code></pre>
                 </div>
 
-                <h3>Exemplo de Response (200 OK)</h3>
+                <h3>Response Example (200 OK)</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
-  "message": "Saque processado com sucesso",
+  "message": "Withdrawal processed successfully",
   "data": {
     "id": 123,
     "status": "processing",
     "amount": 5000,
     "type": "withdrawal",
     "has_baas": true,
-    "postback_url": "https://seusite.com/webhook/withdraw",
+    "postback_url": "https://yoursite.com/webhook/withdraw",
     "pix_key": "email@exemplo.com",
     "pix_key_type": "email",
     "can_auto_process": true,
@@ -977,19 +984,19 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
 }</code></pre>
                 </div>
 
-                <h4>Campos da Response</h4>
+                <h4>Response Fields</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>id</code></td>
-                                <td>ID do pedido de saque</td>
+                                <td>Withdrawal order ID</td>
                             </tr>
                             <tr>
                                 <td><code>status</code></td>
@@ -999,27 +1006,27 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
                             </tr>
                             <tr>
                                 <td><code>has_baas</code></td>
-                                <td>Se há BaaS configurado para processamento automático</td>
+                                <td>Whether BaaS is configured for automatic processing</td>
                             </tr>
                             <tr>
                                 <td><code>can_auto_process</code></td>
-                                <td>Se o saque foi processado automaticamente via BaaS</td>
+                                <td>Whether the withdrawal was automatically processed via BaaS</td>
                             </tr>
                             <tr>
                                 <td><code>balances</code></td>
-                                <td>Saldos atualizados após o débito (em centavos)</td>
+                                <td>Updated balances after the debit (in cents)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Postback de Status</h3>
-                <p>Quando configurado, o <code>postback_url</code> receberá uma requisição POST a cada mudança de status
-                    do saque:</p>
+                <h3>Status Postback</h3>
+                <p>When configured, the <code>postback_url</code> will receive a POST request on each withdrawal status
+                    change:</p>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "id": 123,
@@ -1031,31 +1038,31 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
 }</code></pre>
                 </div>
 
-                <h4>Status do Saque</h4>
+                <h4>Withdrawal Status</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>Status</th>
-                                <th>Descrição</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="badge badge-info">processing</span></td>
-                                <td>Em processamento no BaaS</td>
+                                <td>Being processed by BaaS</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-success">completed</span></td>
-                                <td>Saque concluído com sucesso</td>
+                                <td>Withdrawal completed successfully</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">failed</span></td>
-                                <td>Falha no processamento</td>
+                                <td>Processing failed</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">rejected</span></td>
-                                <td>Rejeitado pelo admin ou BaaS</td>
+                                <td>Rejected by admin or BaaS</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1064,17 +1071,18 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
 
             <!-- Listar Payouts -->
             <section id="listar-payouts" class="section">
-                <h2>Listar Payouts</h2>
+                <h2>List Payouts</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/payout</span>
                 </div>
 
-                <p>Lista todos os payouts da empresa autenticada.</p>
+                <p>Lists all payouts for the authenticated company.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
-                    header <code>Authorization</code>.
+                    <strong>Authentication:</strong> This endpoint requires the <strong>private API Key</strong> sent in
+                    the
+                    <code>Authorization</code> header.
                 </div>
 
                 <h3>Query Parameters</h3>
@@ -1082,18 +1090,18 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
                     <table>
                         <thead>
                             <tr>
-                                <th>Parâmetro</th>
-                                <th>Tipo</th>
-                                <th>Obrigatório</th>
-                                <th>Descrição</th>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Filtra por status. Aceita múltiplos separados por vírgula: <code>pending</code>,
+                                <td>No</td>
+                                <td>Filter by status. Accepts multiple comma-separated: <code>pending</code>,
                                     <code>completed</code>, <code>failed</code>, <code>rejected</code>,
                                     <code>processing</code>
                                 </td>
@@ -1101,43 +1109,43 @@ GET https://api.monetipag.com/api/v2/invoices?start_date=2026-03-01&amp;status=p
                             <tr>
                                 <td><code>page</code></td>
                                 <td>int</td>
-                                <td>Não</td>
-                                <td>Número da página (default: 1)</td>
+                                <td>No</td>
+                                <td>Page number (default: 1)</td>
                             </tr>
                             <tr>
                                 <td><code>limit</code></td>
                                 <td>int</td>
-                                <td>Não</td>
-                                <td>Itens por página. Se omitido, retorna todos</td>
+                                <td>No</td>
+                                <td>Items per page. If omitted, returns all</td>
                             </tr>
                             <tr>
                                 <td><code>start_date</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Data inicial no formato <code>YYYY-MM-DD</code></td>
+                                <td>No</td>
+                                <td>Start date in <code>YYYY-MM-DD</code> format</td>
                             </tr>
                             <tr>
                                 <td><code>end_date</code></td>
                                 <td>string</td>
-                                <td>Não</td>
-                                <td>Data final no formato <code>YYYY-MM-DD</code> (inclusive até 23:59:59)</td>
+                                <td>No</td>
+                                <td>End date in <code>YYYY-MM-DD</code> format (inclusive up to 23:59:59)</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplo de Request</h3>
+                <h3>Request Example</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>GET /api/v2/payout?status=completed,failed&amp;page=1&amp;limit=20
 
-# Com filtro de data
+# With date filter
 GET /api/v2/payout?start_date=2026-01-01&amp;end_date=2026-01-31
 
-# Combinando filtros
+# Combining filters
 GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03-31&amp;page=1&amp;limit=50</code></pre>
                 </div>
 
@@ -1170,89 +1178,89 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
 }</code></pre>
                 </div>
 
-                <h4>Campos da Resposta</h4>
+                <h4>Response Fields</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>id</code></td>
                                 <td>int</td>
-                                <td>ID do payout</td>
+                                <td>Payout ID</td>
                             </tr>
                             <tr>
                                 <td><code>amount</code></td>
                                 <td>int</td>
-                                <td>Valor em centavos</td>
+                                <td>Amount in cents</td>
                             </tr>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> or
                                     <code>rejected</code>
                                 </td>
                             </tr>
                             <tr>
                                 <td><code>type</code></td>
                                 <td>string</td>
-                                <td>Tipo do payout (<code>withdrawal</code> ou <code>anticipation</code>)</td>
+                                <td>Payout type (<code>withdrawal</code> or <code>anticipation</code>)</td>
                             </tr>
                             <tr>
                                 <td><code>end_to_end_id</code></td>
                                 <td>string | null</td>
-                                <td>ID E2E do Pix (apenas quando <code>completed</code>)</td>
+                                <td>PIX E2E ID (only when <code>completed</code>)</td>
                             </tr>
                             <tr>
                                 <td><code>rejection_reason</code></td>
                                 <td>string | null</td>
-                                <td>Motivo da rejeição (apenas quando <code>failed</code> ou <code>rejected</code>)</td>
+                                <td>Rejection reason (only when <code>failed</code> or <code>rejected</code>)</td>
                             </tr>
                             <tr>
                                 <td><code>created_at</code></td>
                                 <td>datetime</td>
-                                <td>Data de criação</td>
+                                <td>Creation date</td>
                             </tr>
                             <tr>
                                 <td><code>updated_at</code></td>
                                 <td>datetime</td>
-                                <td>Última atualização</td>
+                                <td>Last update</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Observação:</strong> O campo <code>pagination</code> só é retornado quando
-                    <code>limit</code> é informado.
+                    <strong>Note:</strong> The <code>pagination</code> field is only returned when
+                    <code>limit</code> is provided.
                 </div>
 
-                <h3>Erros Possíveis</h3>
+                <h3>Possible Errors</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>Status</th>
-                                <th>Descrição</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="badge badge-danger">401</span></td>
-                                <td>Token não informado ou inválido</td>
+                                <td>Token not provided or invalid</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">403</span></td>
-                                <td>Nenhuma empresa associada ao token</td>
+                                <td>No company associated with the token</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">500</span></td>
-                                <td>Erro interno ao consultar payouts</td>
+                                <td>Internal error while retrieving payouts</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1261,17 +1269,17 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
 
             <!-- Get Payout by ID -->
             <section id="consultar-payout" class="section">
-                <h2>Consultar Payout</h2>
+                <h2>Get Payout</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/payout/:id</span>
                 </div>
 
-                <p>Retorna o payload de webhook de um payout (withdrawal) da empresa do usuário autenticado.</p>
+                <p>Returns the webhook payload of a payout (withdrawal) for the authenticated user's company.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Requer token de autenticação (userID via contexto Gin). O usuário
-                    deve estar associado a uma empresa.
+                    <strong>Authentication:</strong> Requires authentication token (userID via Gin context). The user
+                    must be associated with a company.
                 </div>
 
                 <h3>Path Parameters</h3>
@@ -1279,16 +1287,16 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
                     <table>
                         <thead>
                             <tr>
-                                <th>Parâmetro</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>id</code></td>
                                 <td>string</td>
-                                <td>Identificador do payout (interpretado conforme o parâmetro <code>by</code>)</td>
+                                <td>Payout identifier (interpreted according to the <code>by</code> parameter)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1299,10 +1307,10 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
                     <table>
                         <thead>
                             <tr>
-                                <th>Parâmetro</th>
-                                <th>Tipo</th>
+                                <th>Parameter</th>
+                                <th>Type</th>
                                 <th>Default</th>
-                                <th>Descrição</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1310,7 +1318,7 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
                                 <td><code>by</code></td>
                                 <td>string</td>
                                 <td><code>tid</code></td>
-                                <td>Tipo de busca. Valores possíveis: <code>tid</code> (ou <code>id</code>),
+                                <td>Search type. Possible values: <code>tid</code> (or <code>id</code>),
                                     <code>external</code>, <code>transaction</code>, <code>e2e</code>, <code>any</code>
                                 </td>
                             </tr>
@@ -1318,59 +1326,59 @@ GET /api/v2/payout?status=pending&amp;start_date=2026-03-01&amp;end_date=2026-03
                     </table>
                 </div>
 
-                <h4>Detalhes do parâmetro <code>by</code></h4>
+                <h4>Details of the <code>by</code> parameter</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Valor</th>
-                                <th>Descrição</th>
+                                <th>Value</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>tid</code> / <code>id</code></td>
-                                <td>Busca pelo ID interno (numérico) da WithdrawalOrder</td>
+                                <td>Search by the internal (numeric) ID of the WithdrawalOrder</td>
                             </tr>
                             <tr>
                                 <td><code>external</code></td>
-                                <td>Busca pelo <code>external_id</code></td>
+                                <td>Search by <code>external_id</code></td>
                             </tr>
                             <tr>
                                 <td><code>transaction</code></td>
-                                <td>Busca pelo <code>transaction_id</code></td>
+                                <td>Search by <code>transaction_id</code></td>
                             </tr>
                             <tr>
                                 <td><code>e2e</code></td>
-                                <td>Busca pelo <code>baas_end_to_end_id</code></td>
+                                <td>Search by <code>baas_end_to_end_id</code></td>
                             </tr>
                             <tr>
                                 <td><code>any</code></td>
-                                <td>Tenta primeiro por ID numérico, depois por <code>external_id</code>,
-                                    <code>transaction_id</code> ou <code>baas_end_to_end_id</code>
+                                <td>Tries first by numeric ID, then by <code>external_id</code>,
+                                    <code>transaction_id</code> or <code>baas_end_to_end_id</code>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <h3>Exemplos de Request</h3>
+                <h3>Request Examples</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>HTTP</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>GET /payout/42?by=tid
 GET /payout/abc123?by=external
 GET /payout/E00012345?by=e2e
-GET /payout/qualquer-valor?by=any</code></pre>
+GET /payout/any-value?by=any</code></pre>
                 </div>
 
                 <h3>Response 200 OK</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "id": 123,
@@ -1382,48 +1390,48 @@ GET /payout/qualquer-valor?by=any</code></pre>
 }</code></pre>
                 </div>
 
-                <h4>Campos da Resposta</h4>
+                <h4>Response Fields</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Tipo</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>id</code></td>
                                 <td>integer / string</td>
-                                <td>ID do payout</td>
+                                <td>Payout ID</td>
                             </tr>
                             <tr>
                                 <td><code>status</code></td>
                                 <td>string</td>
-                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> ou
+                                <td><code>processing</code>, <code>completed</code>, <code>failed</code> or
                                     <code>rejected</code>
                                 </td>
                             </tr>
                             <tr>
                                 <td><code>amount</code></td>
                                 <td>integer</td>
-                                <td>Valor em centavos</td>
+                                <td>Amount in cents</td>
                             </tr>
                             <tr>
                                 <td><code>type</code></td>
                                 <td>string</td>
-                                <td>Sempre <code>"withdrawal"</code></td>
+                                <td>Always <code>"withdrawal"</code></td>
                             </tr>
                             <tr>
                                 <td><code>end_to_end_id</code></td>
                                 <td>string | null</td>
-                                <td>Presente apenas quando <code>status = "completed"</code></td>
+                                <td>Present only when <code>status = "completed"</code></td>
                             </tr>
                             <tr>
                                 <td><code>rejection_reason</code></td>
                                 <td>string | null</td>
-                                <td>Presente apenas quando <code>status = "failed"</code> ou <code>"rejected"</code>
+                                <td>Present only when <code>status = "failed"</code> or <code>"rejected"</code>
                                 </td>
                             </tr>
                         </tbody>
@@ -1431,50 +1439,50 @@ GET /payout/qualquer-valor?by=any</code></pre>
                 </div>
 
                 <div class="alert alert-warning">
-                    <strong>Normalização de status:</strong> Os status <code>pending</code> e qualquer valor
-                    desconhecido são normalizados para <code>processing</code>.
+                    <strong>Status normalization:</strong> The <code>pending</code> status and any unknown value
+                    are normalized to <code>processing</code>.
                 </div>
 
-                <h3>Erros Possíveis</h3>
+                <h3>Possible Errors</h3>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>Status</th>
-                                <th>Corpo</th>
-                                <th>Quando</th>
+                                <th>Body</th>
+                                <th>When</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="badge badge-danger">401</span></td>
                                 <td><code>{"error": "User not authenticated"}</code></td>
-                                <td>Token ausente ou inválido</td>
+                                <td>Token missing or invalid</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">403</span></td>
                                 <td><code>{"error": "No company found for this user"}</code></td>
-                                <td>Usuário sem empresa associada</td>
+                                <td>User has no associated company</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-warning">400</span></td>
                                 <td><code>{"error": "id must be numeric when by=tid"}</code></td>
-                                <td><code>by=tid</code> com ID não numérico</td>
+                                <td><code>by=tid</code> with non-numeric ID</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-warning">400</span></td>
                                 <td><code>{"error": "invalid 'by' param"}</code></td>
-                                <td>Valor inválido no parâmetro <code>by</code></td>
+                                <td>Invalid value for the <code>by</code> parameter</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">404</span></td>
                                 <td><code>{"error": "withdrawal not found"}</code></td>
-                                <td>Payout não encontrado para a empresa</td>
+                                <td>Payout not found for this company</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">500</span></td>
                                 <td><code>{"error": "database error"}</code></td>
-                                <td>Erro interno de banco de dados</td>
+                                <td>Internal database error</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1483,27 +1491,28 @@ GET /payout/qualquer-valor?by=any</code></pre>
 
             <!-- Balance -->
             <section id="saldo" class="section">
-                <h2>Consultar Saldo</h2>
+                <h2>Check Balance</h2>
                 <div class="endpoint-badge">
                     <span class="method get">GET</span>
                     <span class="path">/api/v2/company/balance</span>
                 </div>
 
-                <p>Retorna o saldo disponível da empresa, separado por modalidade de pagamento.</p>
+                <p>Returns the available balance of the company, broken down by payment method.</p>
 
                 <div class="alert alert-info">
-                    <strong>Autenticação:</strong> Este endpoint requer a <strong>API Key privada</strong> enviada no
-                    header <code>Authorization</code>.
+                    <strong>Authentication:</strong> This endpoint requires the <strong>private API Key</strong> sent in
+                    the
+                    <code>Authorization</code> header.
                 </div>
 
-                <h3>Exemplo de Response (200 OK)</h3>
+                <h3>Response Example (200 OK)</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
-  "message": "Saldo obtido com sucesso",
+  "message": "Balance retrieved successfully",
   "data": {
     "pix": 8000,
     "card": 5000,
@@ -1513,31 +1522,31 @@ GET /payout/qualquer-valor?by=any</code></pre>
 }</code></pre>
                 </div>
 
-                <h4>Campos da Response</h4>
+                <h4>Response Fields</h4>
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Campo</th>
-                                <th>Descrição</th>
+                                <th>Field</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>pix</code></td>
-                                <td>Saldo proveniente de pagamentos via PIX (em centavos)</td>
+                                <td>Balance from PIX payments (in cents)</td>
                             </tr>
                             <tr>
                                 <td><code>card</code></td>
-                                <td>Saldo proveniente de pagamentos via cartão (em centavos)</td>
+                                <td>Balance from card payments (in cents)</td>
                             </tr>
                             <tr>
                                 <td><code>bank_slip</code></td>
-                                <td>Saldo proveniente de boletos (em centavos)</td>
+                                <td>Balance from bank slip payments (in cents)</td>
                             </tr>
                             <tr>
                                 <td><code>total</code></td>
-                                <td>Saldo total disponível (em centavos)</td>
+                                <td>Total available balance (in cents)</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1546,37 +1555,37 @@ GET /payout/qualquer-valor?by=any</code></pre>
 
             <!-- Invoice Status -->
             <section id="status-faturas" class="section">
-                <h2>Status das Faturas</h2>
-                <p>Possíveis status de uma fatura:</p>
+                <h2>Invoice Statuses</h2>
+                <p>Possible invoice statuses:</p>
 
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>Status</th>
-                                <th>Descrição</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="badge badge-warning">pending</span></td>
-                                <td>Aguardando pagamento</td>
+                                <td>Awaiting payment</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-success">paid</span></td>
-                                <td>Pagamento confirmado</td>
+                                <td>Payment confirmed</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">canceled</span></td>
-                                <td>Fatura cancelada</td>
+                                <td>Invoice canceled</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-secondary">expired</span></td>
-                                <td>Prazo de pagamento expirado</td>
+                                <td>Payment deadline expired</td>
                             </tr>
                             <tr>
                                 <td><span class="badge badge-danger">failed</span></td>
-                                <td>Falha no processamento do pagamento</td>
+                                <td>Payment processing failed</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1585,41 +1594,41 @@ GET /payout/qualquer-valor?by=any</code></pre>
 
             <!-- Error Codes -->
             <section id="codigos-erro" class="section">
-                <h2>Códigos de Erro</h2>
-                <p>Códigos HTTP retornados pela API:</p>
+                <h2>Error Codes</h2>
+                <p>HTTP codes returned by the API:</p>
 
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>Código</th>
-                                <th>Descrição</th>
+                                <th>Code</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><code>200</code></td>
-                                <td>Requisição bem-sucedida</td>
+                                <td>Successful request</td>
                             </tr>
                             <tr>
                                 <td><code>400</code></td>
-                                <td>Requisição inválida (bad request)</td>
+                                <td>Invalid request (bad request)</td>
                             </tr>
                             <tr>
                                 <td><code>401</code></td>
-                                <td>Não autorizado (token inválido ou ausente)</td>
+                                <td>Unauthorized (invalid or missing token)</td>
                             </tr>
                             <tr>
                                 <td><code>404</code></td>
-                                <td>Recurso não encontrado</td>
+                                <td>Resource not found</td>
                             </tr>
                             <tr>
                                 <td><code>422</code></td>
-                                <td>Erro de validação nos campos enviados</td>
+                                <td>Validation error in submitted fields</td>
                             </tr>
                             <tr>
                                 <td><code>500</code></td>
-                                <td>Erro interno no servidor</td>
+                                <td>Internal server error</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1629,14 +1638,14 @@ GET /payout/qualquer-valor?by=any</code></pre>
             <!-- Webhooks -->
             <section id="webhooks" class="section">
                 <h2>Postback (Webhook)</h2>
-                <p>Quando o campo <code>postback_url</code> é configurado na criação da fatura, a API enviará uma
-                    requisição POST para essa URL sempre que o status da fatura mudar.</p>
+                <p>When the <code>postback_url</code> field is set when creating an invoice, the API will send a
+                    POST request to that URL whenever the invoice status changes.</p>
 
-                <h3>Payload do Webhook</h3>
+                <h3>Webhook Payload</h3>
                 <div class="code-block">
                     <div class="code-header">
                         <span>JSON</span>
-                        <button class="copy-btn" onclick="copyCode(this)">Copiar</button>
+                        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
                     </div>
                     <pre><code>{
   "invoice_id": "inv_123456789",
@@ -1649,15 +1658,15 @@ GET /payout/qualquer-valor?by=any</code></pre>
                 </div>
 
                 <div class="alert alert-info">
-                    <strong>Dica:</strong> Seu endpoint deve responder com status HTTP 200 para confirmar o recebimento.
-                    A API tentará reenviar o webhook em caso de falha.
+                    <strong>Tip:</strong> Your endpoint should respond with HTTP status 200 to confirm receipt.
+                    The API will retry the webhook in case of failure.
                 </div>
             </section>
 
             <!-- Footer -->
             <footer class="footer">
-                <p>monetipag API Documentation - v2.0</p>
-                <p>Desenvolvido com tecnologia moderna para GitHub Pages</p>
+                <p>Monetipag API Documentation - v2.0</p>
+                <p>Built with modern technology for GitHub Pages</p>
             </footer>
         </main>
     </div>
